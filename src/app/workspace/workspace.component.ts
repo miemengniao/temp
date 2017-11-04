@@ -17,15 +17,15 @@ export class WorkspaceComponent implements OnInit {
   sidemenu = [
     {
       'text': '病人查询',
-      'icon' : 'fa fa-home fa-fw fa-lg',
-      'mdbIcon' : '查询',
+      'icon' : 'fa  fa-search fa-fw fa-lg',
+      'mdbIcon' : 'search',
       'routerLink' : '/workspace/query',
       'selected': true
     },
       {
         'text': '查询统计',
-        'icon' : 'fa fa-envelope fa-fw',
-        'mdbIcon' : '统计',
+        'icon' : 'fa fa-line-chart fa-fw',
+        'mdbIcon' : 'show_chart',
         'routerLink' : '/workspace/statistic'
       }  ];
 

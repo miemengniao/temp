@@ -14,7 +14,7 @@ export class TopNavBarComponent implements OnInit {
   menus = [
     {
       'label' : '退出',
-      'icon': 'fa fa-user-circle fa-fw fa-lg',
+      'icon': 'fa fa-sign-out fa-fw fa-lg',
       'menuId': '1'
     }
   ];
