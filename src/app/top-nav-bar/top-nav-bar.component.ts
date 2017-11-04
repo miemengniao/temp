@@ -28,8 +28,10 @@ export class TopNavBarComponent implements OnInit {
 
     }
 
-    onClick(menuItem: any){
-      if (menuItem.menuId && menuItem.menuId === 1){
+    onClick(menuItem: any) {
+      console.log(menuItem);
+
+      if (menuItem.menuId && menuItem.menuId === '1') {
         this._router.navigate(['/login']);
       }
 
