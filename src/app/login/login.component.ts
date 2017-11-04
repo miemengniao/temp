@@ -1,3 +1,4 @@
+import { LoginService } from './../services/login.service';
 import { ThemeService } from './../theme.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -10,7 +11,10 @@ const CSS_LOCATIONs = 'assets/themes/';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  
+  nameModel: string;
+  psModel: string;
+  loginerrortext: string;
+
   sportName: string;
   sportNameObj: any;
   themeNameArray = [{
@@ -37,17 +41,33 @@ export class LoginComponent implements OnInit {
     'name': 'Default', 'fileName': 'BTS-Red'
   }];
 
-  constructor(private route: Router, private theme: ThemeService) {
+  constructor(private route: Router,
+             private theme: ThemeService,
+             private myService: LoginService) {
 
   }
 
   ngOnInit() { }
 
-  login() {
-    this.route.navigateByUrl('workspace');
+  async login() {
+    
+    if (!this.nameModel || !this.psModel) {
+      this.loginerrortext = '请填写账号密码';
+    } else {
+
+      try {
+          const login = await this.myService.login(this.nameModel, this.psModel);
+          this.route.navigateByUrl('workspace');
+      }catch ( x ) {
+        this.loginerrortext = '用户名密码错误，请重新填写';
+      }
+    }
   }
 
-  
+  inputFocus() {
+    this.loginerrortext = '';
+  }
+
 
   setTheme(themeName) {
     console.log(themeName);
