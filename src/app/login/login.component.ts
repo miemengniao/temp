@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  currentDate: Date = new Date(2016, 5, 10);
+  time: Date = new Date();
+  datepickerOpts = {
+    startDate: new Date(2016, 5, 10),
+    autoclose: true,
+    todayBtn: 'linked',
+    todayHighlight: true,
+    assumeNearbyYear: true,
+    format: 'D, d MM yyyy'
+  };
+  constructor(private route: Router) {
 
-  constructor() { }
+  }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  login() {
+    this.route.navigateByUrl('workspace');
   }
 
 }

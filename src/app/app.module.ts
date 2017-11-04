@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -38,7 +39,7 @@ import { ThemeService } from './theme.service';
             ]}
       ])
   ],
-  providers: [CommonHttpService, ThemeService],
+  providers: [CommonHttpService, ThemeService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
