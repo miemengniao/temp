@@ -1,3 +1,211 @@
-<p>
-  query works!
-</p>
+<amexio-card-pane>
+    <amexio-pane-header>
+      查询条件
+    </amexio-pane-header>
+    <amexio-pane-body>
+      <div class="row">
+        <div class="col-lg-6">
+          <amexio-text-input [fieldLabel]="'姓名'" name="name"
+                             [placeholder]="'请输入姓名'"
+                             [enablePopOver]="true"
+                             [iconFeedBack]="true"
+                             [allowBlank]="true" [errorMsg]="'Please enter name'"
+                             [minLength]="2" [maxLength]="15" [minErrorMsg]="'姓名不应该少于2个字'"
+                             [maxErrorMsg]="'姓名不应该超过15个字'"
+          >
+          </amexio-text-input>
+        </div>
+        
+        <div class="col-lg-6">
+          <amexio-date-time-picker
+            [fieldLabel]="'出生日期'"
+            [timepicker]="false"
+            [datepicker]="true"
+            [dateFormat]="'yyyy-mm-dd'"
+            [(ngModel)]="currentDate">
+          </amexio-date-time-picker>
+        </div>
+        
+        <div class="col-lg-6">
+          <amexio-text-input [fieldLabel]="'联系方式'" name="contact"
+                             [placeholder]="'请输入联系方式'"
+                             [enablePopOver]="true"
+                             [iconFeedBack]="true"
+                             [allowBlank]="true" [errorMsg]="'Please enter name'"
+                             [minLength]="2" [maxLength]="15" [minErrorMsg]="'联系方式不应该少于8个数字'"
+                             [maxErrorMsg]="'联系方式不应该超过15个数字'">
+          </amexio-text-input>
+        </div>
+        <div class="col-lg-6">
+          <amexio-text-input [fieldLabel]="'证件号码'" name="contact"
+                             [placeholder]="'请输入证件号码'"
+                             [enablePopOver]="true"
+                             [iconFeedBack]="true"
+                             [allowBlank]="true" [errorMsg]="'Please enter name'"
+                             [minLength]="2" [maxLength]="15" [minErrorMsg]="'联系方式不应该少于8个数字'"
+                             [maxErrorMsg]="'联系方式不应该超过15个数字'">
+          </amexio-text-input>
+        </div>
+  
+      </div>
+    </amexio-pane-body>
+  
+    <amexio-pane-action>
+      <div style="float: right">
+        <amexio-btn-group>
+          <amexio-btn-group-action [label]="'查询'" [type]="'success'" (onClick)="Query()" ></amexio-btn-group-action>
+          <amexio-btn-group-action [label]="'重置'" [type]="'danger'" (onClick)="Reset()"></amexio-btn-group-action>
+        </amexio-btn-group>
+      </div>
+    </amexio-pane-action>
+  </amexio-card-pane>
+  <br>
+  
+  <!-- Modal -->
+  <div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content amexio-card">
+        <div class="modal-header card-header">
+          <h5 class="modal-title" id="exampleModalLabel">信息确认</h5>
+        </div>
+        <div class="modal-body" style="padding: 20px">
+            <i class="fa fa-exclamation"> </i>
+            <span>点击“确认”进入详情页面并算一次阳性结果（同一条记录每天最多算一次），点击“取消”返回</span>
+        </div>
+        <div class="modal-footer">
+          <amexio-btn-group>
+            <amexio-btn-group-action [label]="'确认'" [type]="'success'"  [icon]="' fa fa-fw fa-check'" (onClick)="Confirm()" ></amexio-btn-group-action>
+            <amexio-btn-group-action [label]="'取消'" [type]="'danger'"  [icon]="' fa fa-fw fa-close'"  (onClick)="Cancel()"></amexio-btn-group-action>
+          </amexio-btn-group>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" #hosiptalResult id="hosiptalResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content  amexio-card">
+          <div class="modal-header  card-header">
+            <h5 class="modal-title" id="exampleModalLabel">查询医院结果页面</h5>
+          </div>
+          <div class="modal-body" >
+                  <amexio-data-table
+                    [pageSize] = "10"
+                    [dataReader]="'response.data'"
+                    [checkboxSelect]="false"
+                    [httpUrl]="'assets/data/issue.json'"
+                    [httpMethod]="'get'"
+                    [cClass]="'gridStyle'" [tableDatacClass]="'amexio-grid-record'" [tableTitlecClass]="'amexio-grid-header'" 
+                    [tableHeadercClass]="'amexio-grid-recordheader'">
+                    <amexio-data-table-column [dataIndex]="'date'" [dataType]="'string'" [hidden]="false" [text]="'就诊医院'"></amexio-data-table-column>
+                    <amexio-data-table-column [dataIndex]="'status'" [dataType]="'string'" [hidden]="false" [text]="'就诊日期'"></amexio-data-table-column>
+                  </amexio-data-table>
+          
+          </div>
+          <div class="modal-footer">
+            <amexio-btn-group>
+              <amexio-btn-group-action [label]="'关闭'" [type]="'success'"  [icon]="' fa fa-fw fa-check'" (onClick)="closedata()" ></amexio-btn-group-action>
+            </amexio-btn-group>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  
+  <amexio-card-pane [enableHeader]="true" [enableFooter]="false">
+    <amexio-pane-header>
+      结果总数
+    </amexio-pane-header>
+    <amexio-pane-body>
+      <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2">
+          <amexio-datapoints [west]="true" [center]="true" [east]="true" [south]="true"  >
+            <amexio-west [contentalign]="'center'" [cClass]="'amexio-datapoints-visual'">
+              <i class="fa fa-check fa-2x"></i>
+            </amexio-west>
+            <amexio-center [contentalign]="'left'">
+              <span class="amexio-datapoints-subtitle-issue">8</span>
+              <br>
+              <span class="amexio-datapoints-subtitle">结果总数</span>
+            </amexio-center>
+          </amexio-datapoints>
+        </div>
+        <div class="col-lg-2">
+          <amexio-datapoints [west]="true" [center]="true" [east]="true" [south]="true"  >
+            <amexio-west [contentalign]="'center'" [cClass]="'amexio-datapoints-visual'">
+              <i class="fa fa-envelope-open fa-2x"></i>
+            </amexio-west>
+            <amexio-center [contentalign]="'left'">
+              <span class="amexio-datapoints-subtitle-issue">13</span>
+              <br>
+              <span class="amexio-datapoints-subtitle">匹配姓名</span>
+            </amexio-center>
+          </amexio-datapoints>
+        </div>
+  
+        <div class="col-lg-2">
+          <amexio-datapoints [west]="true" [center]="true" [east]="true" [south]="true" >
+            <amexio-west [contentalign]="'center'" [cClass]="'amexio-datapoints-visual'">
+              <i class="fa fa-bolt fa-2x"></i>
+            </amexio-west>
+            <amexio-center [contentalign]="'left'">
+              <span class="amexio-datapoints-subtitle-issue">6</span>
+              <br>
+              <span class="amexio-datapoints-subtitle">匹配出生日期</span>
+            </amexio-center>
+          </amexio-datapoints>
+        </div>
+  
+        <div class="col-lg-2">
+          <amexio-datapoints [west]="true" [center]="true" [east]="true" [south]="true" >
+            <amexio-west [contentalign]="'center'" [cClass]="'amexio-datapoints-visual'">
+              <i class="fa fa-medium fa-2x"></i>
+            </amexio-west>
+            <amexio-center [contentalign]="'left'">
+              <span class="amexio-datapoints-subtitle-issue">9</span>
+              <br>
+              <span class="amexio-datapoints-subtitle">匹配联系方式</span>
+            </amexio-center>
+          </amexio-datapoints>
+        </div>
+  
+        <div class="col-lg-2">
+          <amexio-datapoints [west]="true" [center]="true" [east]="true" [south]="true" >
+            <amexio-west [contentalign]="'center'" [cClass]="'amexio-datapoints-visual'">
+              <i class="fa fa-low-vision fa-2x"></i>
+            </amexio-west>
+            <amexio-center [contentalign]="'left'">
+              <span class="amexio-datapoints-subtitle-issue">6</span>
+              <br>
+              <span class="amexio-datapoints-subtitle">匹配证件号码</span>
+            </amexio-center>
+          </amexio-datapoints>
+        </div>
+        <div class="col-lg-1"></div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-lg-12">
+          <amexio-data-table
+            [pageSize] = "10"
+            [dataReader]="'response.data'"
+            [httpUrl]="'assets/data/issue.json'"
+            [checkboxSelect]="true"
+            [httpMethod]="'get'"
+            [checkboxSelect] = "Disabled"
+             [cClass]="'gridStyle'" [tableDatacClass]="'amexio-grid-record'" [tableTitlecClass]="abcd" 
+            [tableHeadercClass]="'amexio-grid-recordheader'">
+            <amexio-data-table-column [dataIndex]="'date'" [dataType]="'string'" [hidden]="false" [text]="'姓名'"></amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'status'" [dataType]="'string'" [hidden]="false" [text]="'性别'"></amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'issue'" [dataType]="'string'" [hidden]="false" [text]="'出生日期'"></amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'severity'" [dataType]="'string'" [hidden]="false" [text]="'联系方式'"></amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'idNum'" [dataType]="'string'" [hidden]="false" [text]="'证件号码'"></amexio-data-table-column>
+          </amexio-data-table>
+  
+        </div>
+      </div>
+  
+    </amexio-pane-body>
+  </amexio-card-pane>

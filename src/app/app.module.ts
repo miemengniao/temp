@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { AmexioWidgetModule, CommonHttpService } from 'amexio-ng-extensions';
+import { AmexioDashboardModule } from 'amexio-ng-extensions/dashboard';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -15,6 +16,8 @@ import { QueryComponent } from './query/query.component';
 import { StatisticComponent } from './statistic/statistic.component';
 import { ThemeService } from './theme.service';
 import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
+import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -26,16 +29,18 @@ import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
     TopNavBarComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AmexioWidgetModule,
     HttpModule,
     FormsModule,
+    AmexioDashboardModule,
     RouterModule.forRoot([
       { path: '', component: LoginComponent},
       {path: 'login', component: LoginComponent},
       {path: 'workspace', component: WorkspaceComponent,
             children: [
-                {path : '', component: WorkspaceComponent},
+                { path: '', redirectTo: 'query', pathMatch: 'full'},
                 { path: 'query', component: QueryComponent},
                 { path: 'statistic', component: StatisticComponent}
             ]}

@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     this.themeService.setThemeName(this.themeService.getCurrentUsageThemeName());
 
         // Theme apply
-        if (this.themeService.getCurrentUsageThemeName()){
+        if (this.themeService.getCurrentUsageThemeName()) {
           this.applyTheme(this.themeService.getCurrentUsageThemeName());
         }
         this.reAdjust();
