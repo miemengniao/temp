@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
       const linkEl = document.createElement('link');
       linkEl.setAttribute('rel', 'stylesheet');
       linkEl.id = 'custom_theme';
-      if (this.themeService.getThemeCSSFileName()){
+      if (this.themeService.getThemeCSSFileName()) {
         linkEl.href = CSS_LOCATION + this.themeService.getThemeCSSFileName() + '.css';
       }
       document.head.appendChild(linkEl);

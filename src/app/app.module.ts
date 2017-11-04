@@ -14,6 +14,7 @@ import { WorkspaceComponent } from './workspace/workspace.component';
 import { QueryComponent } from './query/query.component';
 import { StatisticComponent } from './statistic/statistic.component';
 import { ThemeService } from './theme.service';
+import { TopNavBarComponent } from './top-nav-bar/top-nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ThemeService } from './theme.service';
     LoginComponent,
     WorkspaceComponent,
     QueryComponent,
-    StatisticComponent
+    StatisticComponent,
+    TopNavBarComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,7 @@ import { ThemeService } from './theme.service';
     RouterModule.forRoot([
       { path: '', component: LoginComponent},
       {path: 'login', component: LoginComponent},
-      {path: 'workspace',
+      {path: 'workspace', component: WorkspaceComponent,
             children: [
                 {path : '', component: WorkspaceComponent},
                 { path: 'query', component: QueryComponent},

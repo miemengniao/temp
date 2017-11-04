@@ -1,3 +1,100 @@
-<p>
-  workspace works!
-</p>
+<app-top-nav-bar></app-top-nav-bar>
+<div class="container-fluid" (window:resize)="onResize($event)" style="padding-right: 0px;">
+  <div *ngIf="!isMobile" class="row">
+    <div *ngIf="themeName==='Default'" class="col-lg-2 leftcolumn" >
+      <amexio-sidemenubar
+        [width]="'17%'"
+        [bindData]="sidemenu"
+        
+        [toPosition]="60" [expanded]="true"
+        (selectedNode)="routeToLink($event)">
+        <ng-template #amexioNavHeaderTmpl let-navHeader="navHeader">
+          &nbsp;<i [attr.class]="navHeader.icon"></i>&nbsp;<b>{{navHeader.text}}</b>
+        </ng-template>
+        <ng-template #amexioMenuHeaderTmpl let-menuHeader="menuHeader">
+          <div style="width: 100%;" class="amexio-navbarsubmenu-a"> <i [attr.class]="menuHeader.icon"></i>&nbsp;{{menuHeader.text}}</div>
+        </ng-template>
+        <ng-template #amexioSubMenuTmpl let-subMenus="subMenus">
+          <div style="width: 100%;" class="amexio-navbarsubmenu-a"> <i [attr.class]="subMenus.icon"></i>&nbsp;{{subMenus.text}}</div>
+        </ng-template>
+      </amexio-sidemenubar>
+    </div>
+    <!-- Material Design Theme Code-->
+    <div *ngIf="themeName==='MDB'" class="col-lg-2 leftcolumn">
+      <amexio-sidemenubar
+        [width]="'17%'"
+        [bindData]="sidemenu"
+        [toPosition]="60" [expanded]="true"
+        (selectedNode)="routeToLink($event)">
+
+        <ng-template #amexioNavHeaderTmpl let-navHeader="navHeader">
+
+          <i class="material-icons md-18 md-dark">{{navHeader.mdbIcon}}</i>
+          <a>{{navHeader.text}}</a>
+
+        </ng-template>
+        <ng-template #amexioMenuHeaderTmpl let-menuHeader="menuHeader">
+          <i class="material-icons md-18 md-dark">{{menuHeader.mdbIcon}}</i>
+          <a>{{menuHeader.text}}</a>
+        </ng-template>
+        <ng-template #amexioSubMenuTmpl let-subMenus="subMenus">
+          <i class="material-icons md-18 md-dark">{{subMenus.mdbIcon}}</i>
+          <a>&nbsp;{{subMenus.text}}</a>
+        </ng-template>
+      </amexio-sidemenubar>
+    </div>
+    <div class="col-lg-10" style="margin-top: 80px;">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <div *ngIf="isMobile" class="row">
+    <table>
+      <tr>
+        <td *ngIf="themeName==='Default'" >
+          <amexio-sidemenubar
+            [width]="'90%'"
+            [bindData]="sidemenu"
+            [toPosition]="75" [expanded]="false"
+            (selectedNode)="routeToLink($event)">
+            <ng-template #amexioNavHeaderTmpl let-navHeader="navHeader">
+              &nbsp;<i [attr.class]="navHeader.icon"></i>&nbsp;<b>{{navHeader.text}}</b>
+            </ng-template>
+            <ng-template #amexioMenuHeaderTmpl let-menuHeader="menuHeader">
+              <div style="width: 100%;" class="amexio-navbarsubmenu-a"> <i [attr.class]="menuHeader.icon"></i>&nbsp;{{menuHeader.text}}</div>
+            </ng-template>
+            <ng-template #amexioSubMenuTmpl let-subMenus="subMenus">
+              <div style="width: 100%;" class="amexio-navbarsubmenu-a"> <i [attr.class]="subMenus.icon"></i>&nbsp;{{subMenus.text}}</div>
+            </ng-template>
+          </amexio-sidemenubar>
+        </td>
+        <td  *ngIf="themeName==='MDB'" >
+          <amexio-sidemenubar
+            [width]="'90%'"
+            [bindData]="sidemenu"
+            [toPosition]="75" [expanded]="false"
+            (selectedNode)="routeToLink($event)">
+            <ng-template #amexioNavHeaderTmpl let-navHeader="navHeader">
+              <i class="material-icons md-18 md-dark">{{navHeader.mdbIcon}}</i>
+              &nbsp;<b>{{navHeader.text}}</b>
+            </ng-template>
+            <ng-template #amexioMenuHeaderTmpl let-menuHeader="menuHeader">
+              <div style="width: 100%;" class="amexio-navbarsubmenu-a">  <i class="material-icons md-18 md-dark">{{menuHeader.mdbIcon}}</i>
+                &nbsp;{{menuHeader.text}}</div>
+            </ng-template>
+            <ng-template #amexioSubMenuTmpl let-subMenus="subMenus">
+              <div style="width: 100%;" class="amexio-navbarsubmenu-a">  <i class="material-icons md-18 md-dark">{{subMenus.mdbIcon}}</i>&nbsp;{{subMenus.text}}</div>
+            </ng-template>
+          </amexio-sidemenubar>
+
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <br><br><br><br><br>
+          <router-outlet></router-outlet>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</div>
