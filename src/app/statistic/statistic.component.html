@@ -4,17 +4,48 @@
     <amexio-card-pane [enableFooter]="false" [enableHeader]="true">
       <amexio-pane-header>查询情况统计</amexio-pane-header>
       <amexio-pane-body>
-        <div style="float:left">
-        <amexio-dashboard-gauge [height]="'300px'" [width]="'300px'" [data]="queryInToday" [redColorFrom]="40" [redColorTo]="60" [yellowColorFrom]="30"
-                            [yellowColorTo]="40" [minorTicks]="5" [minorTicks]="1"></amexio-dashboard-gauge>
+        
+        <div style="width:30%; float:left;text-align: center" >
+          <h3 >今日查询数</h3>
+            <mwl-gauge
+            class="two"
+            [max]="100"
+            [dialStartAngle]="180"
+            [dialEndAngle]="0"
+            [label]="percentageValue"
+            [value]="gaugeValues[1]"
+            [animated]="false"
+            [animationDuration]="1">
+          </mwl-gauge>
+
         </div>
-        <div style="float:left">
-        <amexio-dashboard-gauge [height]="'300px'" [width]="'300px'" [data]="positiveInToday" [redColorFrom]="40" [redColorTo]="50" [yellowColorFrom]="10"
-                            [yellowColorTo]="40" [minorTicks]="5"></amexio-dashboard-gauge>
+        <div style="width:30%; float:left;text-align: center" >
+            <h3 >今日阳性数</h3>
+            <mwl-gauge
+            class="two"
+            [max]="30"
+            [dialStartAngle]="180"
+            [label]="percentageValue"
+            [dialEndAngle]="0"
+            [value]="gaugeValues[2]"
+            [animated]="false"
+            [animationDuration]="2">
+          </mwl-gauge>
+
         </div>
-        <div style="float:left">
-        <amexio-dashboard-gauge [height]="'300px'" [width]="'300px'" [data]="positiveInMonth" [redColorFrom]="90" [redColorTo]="100" [yellowColorFrom]="75"
-                            [yellowColorTo]="90" [minorTicks]="5"></amexio-dashboard-gauge>
+        <div style="width:30%; float:left;text-align: center" >
+            <h3 >本月阳性数</h3>
+            <mwl-gauge
+            class="two"
+            [max]="200"
+            [dialStartAngle]="180"
+            [dialEndAngle]="0"
+            [label]="percentageValue"
+            [value]="gaugeValues[3]"
+            [animated]="false"
+            [animationDuration]="1">
+          </mwl-gauge>
+
         </div>
       </amexio-pane-body>
     </amexio-card-pane>

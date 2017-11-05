@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 
 import { AmexioWidgetModule, CommonHttpService } from 'amexio-ng-extensions';
 import { AmexioDashboardModule } from 'amexio-ng-extensions/dashboard';
-import {AmexioChartModule} from "amexio-ng-extensions/charts";
+import { GaugeModule } from 'angular-gauge';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -36,9 +36,9 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     AmexioWidgetModule,
     AmexioDashboardModule,
-    AmexioChartModule,
     HttpModule,
     FormsModule,
+    GaugeModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: LoginComponent},
       {path: 'login', component: LoginComponent},
