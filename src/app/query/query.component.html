@@ -5,20 +5,21 @@
     <amexio-pane-body>
       <div class="row">
         <div class="col-lg-6">
-          <amexio-text-input [fieldLabel]="'姓名'" name="name"
+          <amexio-text-input [fieldLabel]="'姓名'" name="name" #queryName="ngModel"
+                             [(ngModel)]="name" 
                              [placeholder]="'请输入姓名'"
-                             [enablePopOver]="true"
-                             [iconFeedBack]="true"
-                             [allowBlank]="true" [errorMsg]="'Please enter name'"
-                             [minLength]="2" [maxLength]="15" [minErrorMsg]="'姓名不应该少于2个字'"
-                             [maxErrorMsg]="'姓名不应该超过15个字'"
+                             [enablePopOver]="false"
+                             [iconFeedBack]="false"
+                             [allowBlank]="false" 
+                             (focus)="inputFocus()"
           >
           </amexio-text-input>
         </div>
         
         <div class="col-lg-6">
-          <amexio-date-time-picker
+          <amexio-date-time-picker #queryBirthday="ngModel"
             [fieldLabel]="'出生日期'"
+            [(ngModel)]="birthDay" 
             [timepicker]="false"
             [datepicker]="true"
             [dateFormat]="'yyyy-mm-dd'"
@@ -27,26 +28,33 @@
         </div>
         
         <div class="col-lg-6">
-          <amexio-text-input [fieldLabel]="'联系方式'" name="contact"
+          <amexio-text-input [fieldLabel]="'联系方式'" name="contact" #queryContact="ngModel"
                              [placeholder]="'请输入联系方式'"
-                             [enablePopOver]="true"
-                             [iconFeedBack]="true"
-                             [allowBlank]="true" [errorMsg]="'Please enter name'"
-                             [minLength]="2" [maxLength]="15" [minErrorMsg]="'联系方式不应该少于8个数字'"
-                             [maxErrorMsg]="'联系方式不应该超过15个数字'">
+                             [(ngModel)]="contact" 
+                             [enablePopOver]="false"
+                             [iconFeedBack]="false"
+                             [allowBlank]="false"
+                             >
           </amexio-text-input>
         </div>
         <div class="col-lg-6">
-          <amexio-text-input [fieldLabel]="'证件号码'" name="contact"
+          <amexio-text-input [fieldLabel]="'证件号码'" name="idNum" #queryIdNum="ngModel"
                              [placeholder]="'请输入证件号码'"
-                             [enablePopOver]="true"
-                             [iconFeedBack]="true"
-                             [allowBlank]="true" [errorMsg]="'Please enter name'"
-                             [minLength]="2" [maxLength]="15" [minErrorMsg]="'联系方式不应该少于8个数字'"
-                             [maxErrorMsg]="'联系方式不应该超过15个数字'">
+                             [(ngModel)]="idNum" 
+                             [enablePopOver]="false"
+                             [iconFeedBack]="false"
+                             [allowBlank]="false" 
+                             >
           </amexio-text-input>
         </div>
-  
+        <div class="col-lg-12"  style="margin:5px 20px 0px 4px" *ngIf="queryErrorText">
+        <div class="col-lg-12 alert alert-danger" role="alert">
+          {{queryErrorText}}
+        </div>
+      </div>
+      </div>
+      <div class="row">
+        
       </div>
     </amexio-pane-body>
   
@@ -60,62 +68,11 @@
     </amexio-pane-action>
   </amexio-card-pane>
   <br>
-  
-  <!-- Modal -->
-  <div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content amexio-card">
-        <div class="modal-header card-header">
-          <h5 class="modal-title" id="exampleModalLabel">信息确认</h5>
-        </div>
-        <div class="modal-body" style="padding: 20px">
-            <i class="fa fa-exclamation"> </i>
-            <span>点击“确认”进入详情页面并算一次阳性结果（同一条记录每天最多算一次），点击“取消”返回</span>
-        </div>
-        <div class="modal-footer">
-          <amexio-btn-group>
-            <amexio-btn-group-action [label]="'确认'" [type]="'success'"  [icon]="' fa fa-fw fa-check'" (onClick)="Confirm()" ></amexio-btn-group-action>
-            <amexio-btn-group-action [label]="'取消'" [type]="'danger'"  [icon]="' fa fa-fw fa-close'"  (onClick)="Cancel()"></amexio-btn-group-action>
-          </amexio-btn-group>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal -->
-  <div class="modal fade" #hosiptalResult id="hosiptalResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content  amexio-card">
-          <div class="modal-header  card-header">
-            <h5 class="modal-title" id="exampleModalLabel">查询医院结果页面</h5>
-          </div>
-          <div class="modal-body" >
-                  <amexio-data-table
-                    [pageSize] = "10"
-                    [dataReader]="'response.data'"
-                    [checkboxSelect]="false"
-                    [httpUrl]="'assets/data/issue.json'"
-                    [httpMethod]="'get'"
-                    [cClass]="'gridStyle'" [tableDatacClass]="'amexio-grid-record'" [tableTitlecClass]="'amexio-grid-header'" 
-                    [tableHeadercClass]="'amexio-grid-recordheader'">
-                    <amexio-data-table-column [dataIndex]="'date'" [dataType]="'string'" [hidden]="false" [text]="'就诊医院'"></amexio-data-table-column>
-                    <amexio-data-table-column [dataIndex]="'status'" [dataType]="'string'" [hidden]="false" [text]="'就诊日期'"></amexio-data-table-column>
-                  </amexio-data-table>
-          
-          </div>
-          <div class="modal-footer">
-            <amexio-btn-group>
-              <amexio-btn-group-action [label]="'关闭'" [type]="'success'"  [icon]="' fa fa-fw fa-check'" (onClick)="closedata()" ></amexio-btn-group-action>
-            </amexio-btn-group>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+     
   
   <amexio-card-pane [enableHeader]="true" [enableFooter]="false">
     <amexio-pane-header>
-      结果总数
+      查询结果
     </amexio-pane-header>
     <amexio-pane-body>
       <div class="row">
@@ -126,7 +83,7 @@
               <i class="fa fa-users fa-2x"></i>
             </amexio-west>
             <amexio-center [contentalign]="'center'">
-              <span >8</span>
+              <span >{{matchTotal}}</span>
               <br>
               <span >结果总数</span>
             </amexio-center>
@@ -138,7 +95,7 @@
               <i class="fa fa-user-o fa-2x"></i>
             </amexio-west>
             <amexio-center [contentalign]="'center'">
-              <span >13</span>
+              <span >{{matchName}}</span>
               <br>
               <span >匹配姓名</span>
             </amexio-center>
@@ -151,7 +108,7 @@
               <i class="fa fa-calendar fa-2x"></i>
             </amexio-west>
             <amexio-center [contentalign]="'center'">
-              <span >6</span>
+              <span >{{matchBirth}}</span>
               <br>
               <span >匹配出生日期</span>
             </amexio-center>
@@ -164,7 +121,7 @@
               <i class="fa fa-phone fa-2x"></i>
             </amexio-west>
             <amexio-center [contentalign]="'left'">
-              <span >9</span>
+              <span >{{matchContact}}</span>
               <br>
               <span >匹配联系方式</span>
             </amexio-center>
@@ -177,7 +134,7 @@
               <i class="fa fa-id-card-o fa-2x"></i>
             </amexio-west>
             <amexio-center [contentalign]="'center'">
-              <span >6</span>
+              <span >{{matchId}}</span>
               <br>
               <span >匹配证件号码</span>
             </amexio-center>
@@ -187,21 +144,44 @@
       </div>
       <br/>
       <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" id="patientData">
           <amexio-data-table
-            [pageSize] = "10"
-            [dataReader]="'response.data'"
-            [httpUrl]="'assets/data/issue.json'"
-            [checkboxSelect]="true"
-            [httpMethod]="'get'"
-            [checkboxSelect] = "Disabled"
-             [cClass]="'gridStyle'" [tableDatacClass]="'amexio-grid-record'" [tableTitlecClass]="abcd" 
+            [pageSize] = "100"
+            [dataTableBindData] = "queryResult"
+            [checkboxSelect]="false"
+            [dataReader]="'data'"
+             [cClass]="'gridStyle'" [tableDatacClass]="'amexio-grid-record query-patient-detail'" [tableTitlecClass]="'hide-table-title'" [tableHeadercClass]="' amexio-grid-header query-patient-detail'"
             [tableHeadercClass]="'amexio-grid-recordheader'">
-            <amexio-data-table-column [dataIndex]="'date'" [dataType]="'string'" [hidden]="false" [text]="'姓名'"></amexio-data-table-column>
-            <amexio-data-table-column [dataIndex]="'status'" [dataType]="'string'" [hidden]="false" [text]="'性别'"></amexio-data-table-column>
-            <amexio-data-table-column [dataIndex]="'issue'" [dataType]="'string'" [hidden]="false" [text]="'出生日期'"></amexio-data-table-column>
-            <amexio-data-table-column [dataIndex]="'severity'" [dataType]="'string'" [hidden]="false" [text]="'联系方式'"></amexio-data-table-column>
-            <amexio-data-table-column [dataIndex]="'idNum'" [dataType]="'string'" [hidden]="false" [text]="'证件号码'"></amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'name'"  [dataType]="'string'" [hidden]="false" [text]="'姓名'">
+                <ng-template #amexioBodyTmpl let-row="row">
+                    <div [class.HighLightMatch]="row.name == name"class="title ">{{row.name}}</div>
+                 </ng-template>
+               </amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'sex'" [dataType]="'string'" [hidden]="false" [text]="'性别'">
+             <ng-template #amexioBodyTmpl let-row="row">
+                <div class="title">{{row.sex}}</div>
+              </ng-template>
+            </amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'birthday'" [dataType]="'string'" [hidden]="false" [text]="'出生日期'">
+                <ng-template #amexioBodyTmpl let-row="row">
+                   <div [class.HighLightMatch]="row.birthday == birthDay" class="title ">{{row.birthday}}</div>
+                 </ng-template>
+               </amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'contact'" [dataType]="'string'" [hidden]="false" [text]="'联系方式'">
+                <ng-template #amexioBodyTmpl let-row="row">
+                   <div [class.HighLightMatch]="row.contact == contact" class="title ">{{row.contact}}</div>
+                 </ng-template>
+               </amexio-data-table-column>
+            <amexio-data-table-column [dataIndex]="'idNum'" [dataType]="'string'" [hidden]="false" [text]="'证件号码'">
+                <ng-template #amexioBodyTmpl let-row="row">
+                   <div [class.HighLightMatch]="row.idNum == idNum" class="title ">{{row.idNum}}</div>
+                 </ng-template>
+               </amexio-data-table-column>
+            <amexio-data-table-column [dataType]="'string'" [hidden]="false" [text]="'详情'">
+                <ng-template #amexioBodyTmpl let-row="row">
+                    <amexio-btn [label]="'详情'" [type]="'success'" [size]="'small'" [icon]="'fa fa-info-circle'" (click)="QueryDetail(row)" ></amexio-btn>
+                 </ng-template>
+               </amexio-data-table-column>
           </amexio-data-table>
   
         </div>
@@ -209,3 +189,55 @@
   
     </amexio-pane-body>
   </amexio-card-pane>
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" #myModal id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content amexio-card">
+          <div class="modal-header card-header">
+            <h5 class="modal-title" id="exampleModalLabel">信息确认</h5>
+          </div>
+          <div class="modal-body" style="padding: 20px">
+              <i class="fa fa-exclamation"> </i>
+              <span>点击“确认”进入详情页面并算一次阳性结果（同一条记录每天最多算一次），点击“取消”返回</span>
+          </div>
+          <div class="modal-footer">
+            <amexio-btn-group>
+              <amexio-btn-group-action [label]="'确认'" [type]="'success'"  [icon]="' fa fa-fw fa-check'" (onClick)="Confirm()" ></amexio-btn-group-action>
+              <amexio-btn-group-action [label]="'取消'" [type]="'danger'"  [icon]="' fa fa-fw fa-close'"  (onClick)="Cancel()"></amexio-btn-group-action>
+            </amexio-btn-group>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" #hosiptalResult id="hosiptalResult" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content  amexio-card">
+            <div class="modal-body" >
+                  <amexio-data-table
+                    [pageSize] = "30"
+                    [dataReader]="'data'"
+                    [checkboxSelect]="false"
+                    [dataTableBindData] = "queryDetails"
+                    [cClass]="'gridStyle'" [tableDatacClass]="'amexio-grid-record'" [tableTitlecClass]="'hide-table-title'" 
+                    [tableHeadercClass]="'amexio-grid-recordheader'">
+                    <amexio-data-table-column [dataIndex]="'hospital'" [dataType]="'string'" [hidden]="false" [text]="'就诊医院'"></amexio-data-table-column>
+                    <amexio-data-table-column [dataIndex]="'hospitalizedDate'" [dataType]="'string'" [hidden]="false" [text]="'就诊日期'">
+                        <ng-template #amexioBodyTmpl let-row="row">
+                           <div class="title ">{{row.hospitalizedDate | date:'yyyy-MM-dd'}}</div>
+                         </ng-template>
+                       </amexio-data-table-column>
+                  </amexio-data-table>
+                  <div style="float:right">
+                    <amexio-btn-group>
+                        <amexio-btn-group-action [label]="'关闭'" [type]="'success'"  [icon]="' fa fa-fw fa-check'" (onClick)="closedata()" ></amexio-btn-group-action>
+                    </amexio-btn-group>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>

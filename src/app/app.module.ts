@@ -1,3 +1,4 @@
+import { QueryService } from './services/query.service';
 import { LoginService } from './services/login.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -53,7 +54,8 @@ import { CommonModule } from '@angular/common';
       CommonHttpService,
       ThemeService,
       CookieService,
-      LoginService
+      LoginService,
+      QueryService
     ],
   bootstrap: [AppComponent]
 })
