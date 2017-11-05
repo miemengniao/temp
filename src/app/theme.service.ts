@@ -42,7 +42,7 @@ export class ThemeService {
   }
 
   getCurrentUsageThemeName() {
-
+    // return JSON.stringify({name: 'Default', fileName: 'BTS-Orange'});
     if (this.cookieService.get('theme_name')) {
       return this.cookieService.get('theme_name');
     }else {
@@ -54,6 +54,7 @@ export class ThemeService {
     this.cookieService.set('CssFileName', fileName);
   }
   getThemeCSSFileName() {
+    // return 'BTS-Orange';
     console.log(this.cookieService.get('CssFileName'));
     if (this.cookieService.get('CssFileName')) {
       return this.cookieService.get('CssFileName');

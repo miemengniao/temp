@@ -18,28 +18,16 @@ export class LoginComponent implements OnInit {
   sportName: string;
   sportNameObj: any;
   themeNameArray = [{
-    'name': 'MDB', 'fileName': 'MAT-bluegrey'
-  }, {
-    'name': 'MDB', 'fileName': 'MAT-amber'
-  }, {
-    'name': 'MDB', 'fileName': 'MAT-brown'
-  }, {
-    'name': 'MDB', 'fileName': 'MAT-indigo'
-  }, {
-    'name': 'MDB', 'fileName': 'MAT-light-blue'
-  }, {
-    'name': 'Default', 'fileName': 'styles'
-  }, {
-    'name': 'Default', 'fileName': 'BTS-Orange'
-  }, {
-    'name': 'Default', 'fileName': 'BTS-Cyan'
-  }, {
-    'name': 'Default', 'fileName': 'BTS-Limegreen'
-  }, {
-    'name': 'Default', 'fileName': 'BTS-Polygon'
-  }, {
-    'name': 'Default', 'fileName': 'BTS-Red'
-  }];
+    'displayname': '现代简洁', 'name': 'MDB', 'fileName': 'MAT-bluegrey'  }, {
+    'displayname': '琥珀乐爱', 'name': 'MDB', 'fileName': 'MAT-amber'  }, {
+    'displayname': '爱巧克力', 'name': 'MDB', 'fileName': 'MAT-brown'  }, {
+    'displayname': '靛蓝深沉', 'name': 'MDB', 'fileName': 'MAT-indigo'  }, {
+    'displayname': '明兰欢快', 'name': 'MDB', 'fileName': 'MAT-light-blue'  }, {
+    'displayname': '加州橙彩', 'name': 'Default', 'fileName': 'BTS-Orange'  }, {
+    'displayname': '宁静青色', 'name': 'Default', 'fileName': 'BTS-Cyan'  }, {
+    'displayname': '轻巧随意', 'name': 'Default', 'fileName': 'BTS-Limegreen'  }, {
+    'displayname': '七巧拼图', 'name': 'Default', 'fileName': 'BTS-Polygon'  }, {
+    'displayname': '红红火火', 'name': 'Default', 'fileName': 'BTS-Red'  }];
 
   constructor(private route: Router,
              private theme: ThemeService,

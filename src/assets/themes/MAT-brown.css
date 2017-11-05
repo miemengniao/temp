@@ -1,9 +1,49 @@
+/* ------- Alternate Style ------- */
+
+mwl-gauge.two > .gauge > .dial {
+    stroke: #334455;
+    stroke-width: 10;
+  }
+  mwl-gauge.two > .gauge > .value {
+    stroke: #795548 ;
+    stroke-dasharray: none;
+    stroke-width: 13;
+  }
+  mwl-gauge.two > .gauge > .value-text {
+    fill: #795548 ;
+  }
 /* ----------------------------------- */
 /*            New Adding               */
 /* ----------------------------------- */
 .HighLightMatch {
     color: #2CD2EC
-  }
+}
+/* ----------------------------------- */
+/*          隐藏表格的title             */
+/* ----------------------------------- */
+.hide-table-title {
+    display: none;
+}
+.query-patient-detail td:first-child  {
+    width: 12.5%;
+}
+.query-patient-detail td:first-child+td  {
+    width: 6.25%;
+}
+.query-patient-detail td:first-child+td+td  {
+    width: 18.75%;
+}
+
+.query-patient-detail td:first-child+td+td+td  {
+    width: 18.75%;
+}
+
+.query-patient-detail td:first-child+td+td+td+td  {
+    width: 31.25%;
+}
+.query-patient-detail td:first-child+td+td+td+td+td  {
+    width: 12.5%;
+}
 /* ----------------------------------- */
 /*            GLOBAL SETTINGS          */
 /* ----------------------------------- */
