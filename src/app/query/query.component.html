@@ -72,7 +72,7 @@
   
   <amexio-card-pane [enableHeader]="true" [enableFooter]="false">
     <amexio-pane-header>
-      查询结果
+      查询结果{{queryCondtion}}
     </amexio-pane-header>
     <amexio-pane-body>
       <div class="row">
@@ -120,7 +120,7 @@
             <amexio-west [contentalign]="'center'" [cClass]="'amexio-datapoints-visual'">
               <i class="fa fa-phone fa-2x"></i>
             </amexio-west>
-            <amexio-center [contentalign]="'left'">
+            <amexio-center [contentalign]="'center'">
               <span >{{matchContact}}</span>
               <br>
               <span >匹配联系方式</span>

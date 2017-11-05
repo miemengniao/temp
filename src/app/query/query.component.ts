@@ -52,7 +52,7 @@ export class QueryComponent implements OnInit {
   // 因为amexio 输入控件不支持一些focus事件,所以只好利用property来模拟实现.
   get name (){ return this._name; }
   get birthDay() {return this._birthDay; }
-  get innerBirthday() {return jQuery('[aria-label="Date picker"]').val(); }
+  get innerBirthday(): string {return jQuery('[aria-label="Date picker"]').val(); }
   get contact () {return this._contact; }
   get idNum () { return this._idNum; }
   set name (value) {
@@ -80,10 +80,23 @@ export class QueryComponent implements OnInit {
       this.queryErrorText = '';
     }
   }
+  queryCondtion: string;
 
+  setQueryCondtion (birth: string) {
+    let ret = '';
+    if ( this.name) { ret += `--姓名为{${this.name}}`; }
+    if ( birth ) { ret += `--出生日期为{${birth}}`; }
+    if ( this.contact) { ret += `--联系方式为{${this.contact}}`; }
+    if ( this.idNum) { ret += `--证件号码为{${this.idNum}}`; }
+
+    this.queryCondtion = ret;
+  }
   Query() {
+    this.queryErrorText = '';
+    const birth = this.innerBirthday.trim();
+
     if ( (this.name === undefined || this.name === '')
-     && (this.innerBirthday === undefined || this.innerBirthday === '')
+     && (birth === undefined || birth === '')
       && (this.contact === undefined || this.contact === '')
        && (this.idNum === undefined  || this.idNum === '')
     ) {
@@ -91,23 +104,25 @@ export class QueryComponent implements OnInit {
       return;
     }else if ( ( (this.contact === undefined || this.contact === '')
             && (this.idNum === undefined || this.idNum === '') )
-        && (this.name === undefined || this.innerBirthday === undefined || this.name === '' || this.innerBirthday === '' )) {
+        && (this.name === undefined || birth === undefined || this.name === '' || birth === '' )) {
           this.queryErrorText = '名字和生日需要同时提供！';
           return;
     }
 
-    if (this.innerBirthday !== undefined && this.innerBirthday !== '' ) {
-      console.log(this.innerBirthday);
-      if (this.innerBirthday.length < 5) {
+    if (birth !== undefined && birth !== '' ) {
+      console.log(birth);
+      console.log(birth.length);
+
+      if (birth.length < 5) {
         const reg = new RegExp('^[0-9]{4}$');
-            if (!reg.test(this.innerBirthday)) {
+            if (!reg.test(birth)) {
               this.queryErrorText = '必须输入完整4位年份';
               return;
             }
       }else {
         const reg = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}$');
-        console.log(this.innerBirthday);
-        if (!reg.test(this.innerBirthday)) {
+        console.log(birth);
+        if (!reg.test(birth)) {
           this.queryErrorText = '必须输入YYYY-MM-DD格式';
           return;
         }
@@ -130,9 +145,12 @@ export class QueryComponent implements OnInit {
       }
     }
     {
+      this.setQueryCondtion(birth);
+      this.queryResult =  {data: []};
+  
 
       this.queryService
-          .query(this.name, this.contact, this.idNum, this.innerBirthday)
+          .query(this.name, this.contact, this.idNum, birth)
           .catch(error => {
             if ( error.status === 401 ) {
               this.router.navigate(['/login']);
